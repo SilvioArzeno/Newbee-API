@@ -63,29 +63,47 @@ https://api-newbee.herokuapp.com/materia/codigo
 
 ### Student model
 
-string **matricula**  MaxLength(7)
+string **matricula**  MaxLength(7) 
+
 string **nombres** MaxLength(30)
+
 string **apellidos** MaxLength(30)
+
 string **password** MaxLength(50)
+
 string **email** MaxLength(50)
+
 bool  **active** --> True if student is active, otherwise false
 
 ### Materia model
 
 string **nombre**  MaxLength(50)
+
 string **codigo**  MaxLength(6)
+
 int **seccion**
+
 string **aula**  MaxLength(10)
+
 string **horarioDias**  MaxLength(30)
+
 string **horarioHoras**  MaxLength(30)
+
 string **profesor**  MaxLength(50)
+
 
 ### Directorio model
 
 string **area**  MaxLength(50)
+
 string **departamento**  MaxLength(50)
+
 string **encargado**  MaxLength(50)
+
 string **telefono**  MaxLength(10)
+
 string **edificio**  MaxLength(50)
+
 string **descripcion**  MaxLength(100)
+
 
