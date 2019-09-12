@@ -86,7 +86,7 @@ users_schema = UserSchema(many= True)
 #HomePage
 @app.route("/")
 def hello():
-    return "Welcome to the Newbee API"
+    return "Welcome to the Newbee API please read git readme.md file for more instructions"
 #Endpoint for new student
 
 
@@ -290,6 +290,7 @@ def directorio_delete(departamento):
     db.session.commit()
 
     return directorio_schema.jsonify(directorio)
+
 
 
 if __name__ == '__main__':
