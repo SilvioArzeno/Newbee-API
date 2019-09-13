@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from sqlalchemy import or_
 import os
 
 app = Flask(__name__)
@@ -251,14 +252,15 @@ def get_directorio():
 #Endpoint to show detail of a directorio by area
 @app.route("/directorio/<area>", methods=["GET"])
 def directorio_detail_area(area):
-    directorio = Directorio.query.filter(Directorio.area == area or Directorio.departamento == area)
-    result = directorios_schema.dump(directorio)
+    directorio_details = Directorio.query.filter(or_(Directorio.departamento == area,Directorio.area == area))
+    result = directorios_schema.dump(directorio_details)
+
     return jsonify(result)
 
 # endpoint to update directorio
 @app.route("/directorio/<departamento>", methods=["PUT"])
 def directorio_update(departamento):
-    directorio = Directorio.query.filter(Directorio.departamento == departamento).first()
+    directorio = Directorio.query.filter_by(Directorio.departamento == departamento).first()
     area = request.json['area']
     departamento = request.json['departamento']
     encargado = request.json['encargado']
