@@ -251,15 +251,9 @@ def get_directorio():
 #Endpoint to show detail of a directorio by area
 @app.route("/directorio/<area>", methods=["GET"])
 def directorio_detail_area(area):
-    directorio = Directorio.query.filter(Directorio.area == area)
+    directorio = Directorio.query.filter(Directorio.area == area or Directorio.departamento == area)
     result = directorios_schema.dump(directorio)
     return jsonify(result)
-
-#Endpoint to show detail of a directorio by departamento
-@app.route("/directorio/<departamento>", methods=["GET"])
-def directorio_detail_departamento(departamento):
-    directorio = Directorio.query.filter(Directorio.departamento == departamento).first()
-    return directorio_schema.jsonify(directorio)
 
 # endpoint to update directorio
 @app.route("/directorio/<departamento>", methods=["PUT"])
