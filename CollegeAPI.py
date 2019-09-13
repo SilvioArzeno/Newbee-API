@@ -259,7 +259,7 @@ def directorio_detail_area(area):
 @app.route("/directorio/<departamento>", methods=["GET"])
 def directorio_detail_departamento(departamento):
     directorio = Directorio.query.filter(Directorio.departamento == departamento).first()
-    return materia_schema.jsonify(directorio)
+    return directorio_schema.jsonify(directorio)
 
 # endpoint to update directorio
 @app.route("/directorio/<departamento>", methods=["PUT"])
