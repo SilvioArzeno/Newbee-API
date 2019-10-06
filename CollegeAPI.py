@@ -18,19 +18,21 @@ class Student(db.Model):
     apellidos = db.Column(db.String(30))
     password = db.Column(db.String(50))
     email = db.Column(db.String(50))
+    courses = db.Column(db.String(100))
     active = db.Column(db.Boolean,default = False,nullable = False)
 
-    def __init__(self,matricula,nombres,apellidos,password,email,active):
+    def __init__(self,matricula,nombres,apellidos,password,email,courses,active):
         self.matricula = matricula
         self.nombres = nombres
         self.apellidos = apellidos
         self.password = password
         self.email = email
+        self.courses = courses
         self.active = active
 
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ('matricula','nombres','apellidos','password','email','active')
+        fields = ('matricula','nombres','apellidos','password','email','courses','active')
 
 class Materia(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -100,9 +102,10 @@ def add_student():
     apellidos = request.json['apellidos']
     password = request.json['password']
     email = request.json['email']
+    courses = request.json['courses']
     active = request.json['active']
 
-    new_student = Student(matricula,nombres,apellidos,password,email,active)
+    new_student = Student(matricula,nombres,apellidos,password,email,courses,active)
 
     db.session.add(new_student)
     db.session.commit()
@@ -131,6 +134,7 @@ def user_update(matricula):
     nombres = request.json['nombres']
     apellidos = request.json['apellidos']
     password = request.json['password']
+    courses = request.json['courses']
     email = request.json['email']
     active = request.json['active']
 
@@ -139,6 +143,7 @@ def user_update(matricula):
     student.apellidos = apellidos
     student.password = password
     student.email = email
+    student.courses = courses
     student.active = active
 
     db.session.commit()
