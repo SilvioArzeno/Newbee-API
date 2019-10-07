@@ -6,7 +6,7 @@ import os
 
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['HEROKU_POSTGRESQL_BLACK_URL']
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'crud.sqlite')  #os.environ['HEROKU_POSTGRESQL_BLACK_URL']
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
@@ -18,21 +18,19 @@ class Student(db.Model):
     apellidos = db.Column(db.String(30))
     password = db.Column(db.String(50))
     email = db.Column(db.String(50))
-    courses = db.Column(db.String(100))
     active = db.Column(db.Boolean,default = False,nullable = False)
 
-    def __init__(self,matricula,nombres,apellidos,password,email,courses,active):
+    def __init__(self,matricula,nombres,apellidos,password,email,active):
         self.matricula = matricula
         self.nombres = nombres
         self.apellidos = apellidos
         self.password = password
         self.email = email
-        self.courses = courses
         self.active = active
 
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ('matricula','nombres','apellidos','password','email','courses','active')
+        fields = ('matricula','nombres','apellidos','password','email','active')
 
 class Materia(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -58,6 +56,20 @@ class MateriaSchema(ma.Schema):
     class Meta:
         fields = ('nombre','codigo','seccion','aula','horarioDias','horarioHoras','profesor')
 
+class Horario(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    studentID = db.Column(db.String(7))
+    materiaID = db.Column(db.Integer, Foreign_key = Materia.codigo)
+
+    def __init__(self,studentID,materiaID):
+
+        self.studentID = studentID
+        self.materiaID = materiaID
+
+class HorarioSchema(ma.Schema):
+    class Meta:
+        fields = ('studentID','materiaID')
+
 class Directorio(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     area = db.Column(db.String(50))
@@ -81,6 +93,8 @@ class DirectorioSchema(ma.Schema):
 
 directorio_schema = DirectorioSchema()
 directorios_schema = DirectorioSchema(many=True)
+horario_schema = HorarioSchema()
+horarios_schema = HorarioSchema(many=True)
 materia_schema = MateriaSchema()
 materias_schema = MateriaSchema(many=True)        
 user_schema = UserSchema()
@@ -102,10 +116,9 @@ def add_student():
     apellidos = request.json['apellidos']
     password = request.json['password']
     email = request.json['email']
-    courses = request.json['courses']
     active = request.json['active']
 
-    new_student = Student(matricula,nombres,apellidos,password,email,courses,active)
+    new_student = Student(matricula,nombres,apellidos,password,email,active)
 
     db.session.add(new_student)
     db.session.commit()
@@ -158,11 +171,43 @@ def user_delete(matricula):
     db.session.commit()
 
     return user_schema.jsonify(student)
+#---------------Horarios-------------------#
+@app.route("/horario", methods = ["POST"])
+def add_horario():
+    studentID = request.json['StudentID']
+    materiaID = request.json['CourseID']
 
+    new_horario = Horario(studentID,materiaID)
 
+    db.session.add(new_horario)
+    db.session.commit()
+
+    return jsonify(True)
+
+#Endpoint to show specific horarios
+@app.route("/horario/<matricula>", methods=["GET"] )
+def get_horario(matricula):
+    all_horarios = Horario.query.filter(Horario.studentID == matricula)
+    resultHorarios = horarios_schema.dump(all_horarios)
+    all_materias = []
+    for materia in resultHorarios : 
+        all_materias.append(materiaGet(materia['materiaID']))
+
+    result = materias_schema.dump(all_materias)
+    return jsonify(result)
+
+@app.route("/horario/<codigo>", methods=["DELETE"])
+def horario_delete(codigo):
+    horario = Horario.query.filter(Horario.materiaID == codigo).first()
+    db.session.delete(horario)
+    db.session.commit()
+
+    return materia_schema.jsonify(horario)
 
 #-------------- Materias--------------------#
-
+def materiaGet(codigo):
+    materia = Materia.query.filter(Materia.codigo == codigo).first()
+    return materia
 #endpoint for new materia
 @app.route("/materia", methods = ["POST"])
 def add_materia():
