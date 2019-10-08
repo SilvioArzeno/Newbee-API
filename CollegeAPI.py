@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
-from sqlalchemy import or_
+from sqlalchemy import or_,and_
 import os
 
 app = Flask(__name__)
@@ -59,7 +59,7 @@ class MateriaSchema(ma.Schema):
 class Horario(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     studentID = db.Column(db.String(7))
-    materiaID = db.Column(db.Integer, Foreign_key = Materia.codigo)
+    materiaID = db.Column(db.Integer)
 
     def __init__(self,studentID,materiaID):
 
@@ -196,13 +196,13 @@ def get_horario(matricula):
     result = materias_schema.dump(all_materias)
     return jsonify(result)
 
-@app.route("/horario/<codigo>", methods=["DELETE"])
-def horario_delete(codigo):
-    horario = Horario.query.filter(Horario.materiaID == codigo).first()
+@app.route("/horario/<matricula>/<codigo>", methods=["DELETE"])
+def horario_delete(matricula, codigo):
+    horario = Horario.query.filter(and_(Horario.materiaID == codigo,Horario.studentID == matricula)).first()
     db.session.delete(horario)
     db.session.commit()
 
-    return materia_schema.jsonify(horario)
+    return jsonify(True)
 
 #-------------- Materias--------------------#
 def materiaGet(codigo):
