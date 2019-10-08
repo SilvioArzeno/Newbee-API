@@ -59,7 +59,7 @@ class MateriaSchema(ma.Schema):
 class Horario(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     studentID = db.Column(db.String(7))
-    materiaID = db.Column(db.Integer)
+    materiaID = db.Column(db.String(10))
 
     def __init__(self,studentID,materiaID):
 
