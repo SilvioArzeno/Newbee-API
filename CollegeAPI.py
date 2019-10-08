@@ -6,7 +6,7 @@ import os
 
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'crud.sqlite')  #os.environ['HEROKU_POSTGRESQL_BLACK_URL']
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['HEROKU_POSTGRESQL_BLACK_URL'] 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
