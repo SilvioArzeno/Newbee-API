@@ -147,7 +147,6 @@ def user_update(matricula):
     nombres = request.json['nombres']
     apellidos = request.json['apellidos']
     password = request.json['password']
-    courses = request.json['courses']
     email = request.json['email']
     active = request.json['active']
 
@@ -156,7 +155,6 @@ def user_update(matricula):
     student.apellidos = apellidos
     student.password = password
     student.email = email
-    student.courses = courses
     student.active = active
 
     db.session.commit()
