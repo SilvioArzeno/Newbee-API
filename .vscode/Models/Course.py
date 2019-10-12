@@ -2,7 +2,7 @@ from CollegeAPI import ma
 from CollegeAPI import db
 from CollegeAPI import app
 
-class Materia(db.Model):
+class Course(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     CourseName = db.Column(db.String(50))
     CourseID = db.Column(db.String(6))
@@ -22,6 +22,6 @@ class Materia(db.Model):
         self.ScheduleHours = ScheduleHours
         self.CourseTeacher = CourseTeacher
 
-class MateriaSchema(ma.Schema):
+class CourseSchema(ma.Schema):
     class Meta:
         fields = ('CourseName','CourseID','CourseSection','CourseRoom','ScheduleDays','ScheduleHours','CourseTeacher')
