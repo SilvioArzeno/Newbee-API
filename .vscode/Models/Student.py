@@ -1,5 +1,5 @@
-from flask_sqlalchemy import SQLAlchemy
 from CollegeAPI import ma
+from CollegeAPI import db
 from CollegeAPI import app
 
 
