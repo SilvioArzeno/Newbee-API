@@ -1,6 +1,4 @@
-from CollegeAPI import ma
-from CollegeAPI import db
-from CollegeAPI import app
+from CollegeAPI import ma,db,app
 
 
 class Student(db.Model):
