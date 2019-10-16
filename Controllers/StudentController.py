@@ -1,18 +1,18 @@
-from CollegeAPI import db, app, user_schema
+from CollegeAPI import db, app, user_schema,users_schema
 from Models.Student import Student
 from flask import jsonify,request
 
 
 @app.route("/student", methods = ["POST"])
 def add_student():
-    matricula = request.json['matricula']
-    nombres = request.json['nombres']
-    apellidos = request.json['apellidos']
-    password = request.json['password']
-    email = request.json['email']
-    active = request.json['active']
+    StudentID = request.json['StudentID']
+    FirstName = request.json['FirstName']
+    LastName = request.json['LastName']
+    Password = request.json['Password']
+    Email = request.json['Email']
+    Active = request.json['Active']
 
-    new_student = Student(matricula,nombres,apellidos,password,email,active)
+    new_student = Student(StudentID,FirstName,LastName,Password,Email,Active)
 
     db.session.add(new_student)
     db.session.commit()
@@ -26,39 +26,39 @@ def get_students():
     result = users_schema.dump(all_students)
     return jsonify(result)
 
-# endpoint to get user detail by matricula
-@app.route("/student/<matricula>", methods=["GET"])
-def user_detail(matricula):
-    student = Student.query.filter(Student.matricula == matricula).first()
+# endpoint to get user detail by StudentID
+@app.route("/student/<StudentID>", methods=["GET"])
+def user_detail(StudentID):
+    student = Student.query.filter(Student.StudentID == StudentID).first()
     return user_schema.jsonify(student)
 
 
 # endpoint to update user
-@app.route("/student/<matricula>", methods=["PUT"])
-def user_update(matricula):
-    student = Student.query.filter(Student.matricula == matricula).first()
-    matricula = request.json['matricula']
-    nombres = request.json['nombres']
-    apellidos = request.json['apellidos']
-    password = request.json['password']
-    email = request.json['email']
-    active = request.json['active']
+@app.route("/student/<StudentID>", methods=["PUT"])
+def user_update(StudentID):
+    student = Student.query.filter(Student.StudentID == StudentID).first()
+    StudentID = request.json['StudentID']
+    FirstName = request.json['FirstName']
+    LastName = request.json['LastName']
+    Password = request.json['Password']
+    Email = request.json['Email']
+    Active = request.json['Active']
 
-    student.matricula = matricula
-    student.nombres = nombres
-    student.apellidos = apellidos
-    student.password = password
-    student.email = email
-    student.active = active
+    student.StudentID = StudentID
+    student.FirstName = FirstName
+    student.LastName = LastName
+    student.Password = Password
+    student.Email = Email
+    student.Active = Active
 
     db.session.commit()
     return user_schema.jsonify(student)
 
 
 # endpoint to delete user
-@app.route("/student/<matricula>", methods=["DELETE"])
-def user_delete(matricula):
-    student = Student.query.filter(Student.matricula == matricula).first()
+@app.route("/student/<StudentID>", methods=["DELETE"])
+def user_delete(StudentID):
+    student = Student.query.filter(Student.StudentID == StudentID).first()
     db.session.delete(student)
     db.session.commit()
 
