@@ -21,7 +21,7 @@ def add_Course():
     db.session.add(new_Course)
     db.session.commit()
 
-    return Course_schema.jsonify(new_Course)
+    return materia_schema.jsonify(new_Course)
 
 #Endpoint to show all Courses
 @app.route("/Course", methods=["GET"] )
