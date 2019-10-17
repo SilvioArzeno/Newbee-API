@@ -1,6 +1,6 @@
 from CollegeAPI import db, app, materias_schema
 from Models.Schedule import Schedule
-from Controllers.CourseController import get_Course
+from Controllers.CourseController import Course_detail
 from flask import jsonify,request
 from sqlalchemy import and_
 
@@ -23,7 +23,7 @@ def get_Schedule(StudentID):
     resultSchedules = materias_schema.dump(all_Schedules)
     all_materias = []
     for materia in resultSchedules : 
-        all_materias.append(get_Course(materia['CourseID']))
+        all_materias.append(Course_detail(materia['CourseID']))
 
     result = materias_schema.dump(all_materias)
     return jsonify(result)
@@ -31,7 +31,7 @@ def get_Schedule(StudentID):
 @app.route("/Schedule/<StudentID>/<CourseID>", methods=["DELETE"])
 def Schedule_delete(StudentID, CourseID):
     Schedules = Schedule.query.filter(and_(Schedule.CourseID == CourseID,Schedule.StudentID == StudentID)).first()
-    db.session.delete(Schedule)
+    db.session.delete(Schedules)
     db.session.commit()
 
     return jsonify(True)
