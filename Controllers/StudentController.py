@@ -1,7 +1,9 @@
-from CollegeAPI import db, app, user_schema,users_schema
-from Models.Student import Student
+from CollegeAPI import db, app
+from Models.Student import Student,UserSchema
 from flask import jsonify,request
 
+User_Schema =UserSchema
+Users_Schema = UserSchema(many=True)
 
 @app.route("/student", methods = ["POST"])
 def add_student():
@@ -17,20 +19,20 @@ def add_student():
     db.session.add(new_student)
     db.session.commit()
 
-    return user_schema.jsonify(new_student)
+    return User_Schema.jsonify(new_student)
 
 #Endpoint to show all users
 @app.route("/student", methods=["GET"] )
 def get_students():
     all_students = Student.query.all()
-    result = users_schema.dump(all_students)
+    result = Users_Schema.dump(all_students)
     return jsonify(result)
 
 # endpoint to get user detail by StudentID
 @app.route("/student/<StudentID>", methods=["GET"])
 def user_detail(StudentID):
     student = Student.query.filter(Student.StudentID == StudentID).first()
-    return user_schema.jsonify(student)
+    return User_Schema.jsonify(student)
 
 
 # endpoint to update user
@@ -52,7 +54,7 @@ def user_update(StudentID):
     student.Active = Active
 
     db.session.commit()
-    return user_schema.jsonify(student)
+    return User_Schema.jsonify(student)
 
 
 # endpoint to delete user
@@ -62,4 +64,4 @@ def user_delete(StudentID):
     db.session.delete(student)
     db.session.commit()
 
-    return user_schema.jsonify(student)
+    return User_Schema.jsonify(student)

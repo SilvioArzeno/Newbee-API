@@ -1,8 +1,10 @@
-from CollegeAPI import db, app, materias_schema
+from CollegeAPI import db, app
 from Models.Schedule import Schedule
-from Controllers.CourseController import Course_detail
+from Controllers.CourseController import Course_detail,Courses_Schema
 from flask import jsonify,request
 from sqlalchemy import and_
+
+
 
 @app.route("/Schedule", methods = ["POST"])
 def add_Schedule():
@@ -20,12 +22,12 @@ def add_Schedule():
 @app.route("/Schedule/<StudentID>", methods=["GET"] )
 def get_Schedule(StudentID):
     all_Schedules = Schedule.query.filter(Schedule.StudentID == StudentID)
-    resultSchedules = materias_schema.dump(all_Schedules)
+    resultSchedules = Courses_Schema.dump(all_Schedules)
     all_materias = []
     for materia in resultSchedules : 
         all_materias.append(Course_detail(materia['CourseID']))
 
-    result = materias_schema.dump(all_materias)
+    result = Courses_Schema.dump(all_materias)
     return jsonify(result)
 
 @app.route("/Schedule/<StudentID>/<CourseID>", methods=["DELETE"])

@@ -1,6 +1,9 @@
-from CollegeAPI import db, app,materia_schema,materias_schema
-from Models.Course import Course
+from CollegeAPI import db, app
+from Models.Course import Course,CourseSchema
 from flask import jsonify,request
+
+Course_Schema = CourseSchema
+Courses_Schema = CourseSchema(many=True)
 
 def CourseGet(CourseID):
     Course = Course.query.filter(Course.CourseID == CourseID).first()
@@ -21,20 +24,20 @@ def add_Course():
     db.session.add(new_Course)
     db.session.commit()
 
-    return materia_schema.jsonify(new_Course)
+    return Course_Schema.jsonify(new_Course)
 
 #Endpoint to show all Courses
 @app.route("/Course", methods=["GET"] )
 def get_Course():
     all_Courses = Course.query.all()
-    result = Courses_schema.dump(all_Courses)
+    result = Courses_Schema.dump(all_Courses)
     return jsonify(result)
 
 #Endpoint to show detail of a Course by CourseID
 @app.route("/Course/<CourseID>", methods=["GET"])
 def Course_detail(CourseID):
     Course = Course.query.filter(Course.CourseID == CourseID).first()
-    return Course_schema.jsonify(Course)
+    return Course_Schema.jsonify(Course)
 
 
 # endpoint to update Course
@@ -58,7 +61,7 @@ def Course_update(CourseID):
     Course.CourseTeacher = CourseTeacher
 
     db.session.commit()
-    return Course_schema.jsonify(Course)
+    return Course_Schema.jsonify(Course)
 
 # endpoint to delete user
 @app.route("/Course/<CourseID>", methods=["DELETE"])
@@ -67,4 +70,4 @@ def Course_delete(CourseID):
     db.session.delete(Course)
     db.session.commit()
 
-    return Course_schema.jsonify(Course)
+    return Course_Schema.jsonify(Course)

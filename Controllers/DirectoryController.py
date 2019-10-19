@@ -1,7 +1,10 @@
-from CollegeAPI import db, app, directorios_schema,directorio_schema
-from Models.Student import Student
+from CollegeAPI import db, app
+from Models.Directory import Directory,DirectorySchema
 from flask import jsonify,request
 
+
+Directory_Schema = DirectorySchema
+Directories_Schema = DirectorySchema(many=True)
 #endpoint for new Directory
 @app.route("/Directory", methods = ["POST"])
 def add_Directory():
@@ -18,20 +21,20 @@ def add_Directory():
     db.session.add(new_Directory)
     db.session.commit()
 
-    return Directory_schema.jsonify(new_Directory)
+    return Directory_Schema.jsonify(new_Directory)
 
 #Endpoint to show all Directorys
 @app.route("/Directory", methods=["GET"] )
 def get_Directory():
     all_Directorys = Directory.query.all()
-    result = Directorys_schema.dump(all_Directorys)
+    result = Directories_Schema.dump(all_Directorys)
     return jsonify(result)
 
 #Endpoint to show detail of a Directory by Area
 @app.route("/Directory/<Area>", methods=["GET"])
 def Directory_detail_Area(Area):
     Directory_details = Directory.query.filter(or_(Directory.Department == Area,Directory.Area == Area))
-    result = Directorys_schema.dump(Directory_details)
+    result = Directories_Schema.dump(Directory_details)
 
     return jsonify(result)
 
@@ -54,7 +57,7 @@ def Directory_update(Department):
     Directory.Description = Description
 
     db.session.commit()
-    return Directory_schema.jsonify(Directory)
+    return Directory_Schema.jsonify(Directory)
 
 # endpoint to delete Directory
 @app.route("/Directory/<Department>", methods=["DELETE"])
@@ -63,4 +66,4 @@ def Directory_delete(Department):
     db.session.delete(Directory)
     db.session.commit()
 
-    return Directory_schema.jsonify(Directory)
+    return Directory_Schema.jsonify(Directory)
