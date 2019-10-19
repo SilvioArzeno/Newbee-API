@@ -1,0 +1,2 @@
+from CollegeAPI import db 
+

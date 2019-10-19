@@ -1,4 +1,4 @@
-from CollegeAPI import db,SQLAlchemy
+from CollegeAPI import db
 from Models.Student import Student,UserSchema
 from flask import jsonify,request,Blueprint
 
