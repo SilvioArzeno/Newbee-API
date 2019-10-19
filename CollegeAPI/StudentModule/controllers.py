@@ -2,10 +2,9 @@ from CollegeAPI import db
 from models import Student,UserSchema
 from flask import request,Blueprint
 
-app = Blueprint('studentmodule',__name__)
+app = Blueprint('CourseModule',__name__)
 User_Schema =UserSchema()
 Users_Schema = UserSchema(many=True)
-StudentEndpoint = Blueprint('app',__name__)
 
 @app.route("/student", methods = ["POST"])
 def add_student():
