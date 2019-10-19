@@ -3,7 +3,7 @@ from Models.Directory import Directory,DirectorySchema
 from flask import jsonify,request
 
 
-Directory_Schema = DirectorySchema
+Directory_Schema = DirectorySchema()
 Directories_Schema = DirectorySchema(many=True)
 #endpoint for new Directory
 @app.route("/Directory", methods = ["POST"])

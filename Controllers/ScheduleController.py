@@ -23,11 +23,11 @@ def add_Schedule():
 def get_Schedule(StudentID):
     all_Schedules = Schedule.query.filter(Schedule.StudentID == StudentID)
     resultSchedules = Courses_Schema.dump(all_Schedules)
-    all_materias = []
+    All_Courses = []
     for materia in resultSchedules : 
-        all_materias.append(Course_detail(materia['CourseID']))
+        All_Courses.append(Course_detail(materia['CourseID']))
 
-    result = Courses_Schema.dump(all_materias)
+    result = Courses_Schema.dump(All_Courses)
     return jsonify(result)
 
 @app.route("/Schedule/<StudentID>/<CourseID>", methods=["DELETE"])

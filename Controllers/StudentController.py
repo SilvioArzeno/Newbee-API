@@ -2,7 +2,7 @@ from CollegeAPI import db, app
 from Models.Student import Student,UserSchema
 from flask import jsonify,request
 
-User_Schema =UserSchema
+User_Schema =UserSchema()
 Users_Schema = UserSchema(many=True)
 
 @app.route("/student", methods = ["POST"])
