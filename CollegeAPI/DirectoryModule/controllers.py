@@ -1,14 +1,15 @@
-from CollegeAPI import db, app
-from models import Directory,DirectorySchema
-from flask import jsonify,request,Blueprint
+from CollegeAPI import db
+from models import Directory, DirectorySchema
+from flask import jsonify, request, Blueprint
+from sqlalchemy import or_
 
 app = Blueprint('DirectoryModule',__name__)
 Directory_Schema = DirectorySchema()
 Directories_Schema = DirectorySchema(many=True)
 #endpoint for new Directory
-@app.route("/Directory", methods = ["POST"])
+@app.route("/Directory", methods=["POST"])
 def add_Directory():
-    
+   
     Area = request.json['Area']
     Department = request.json['Department']
     Supervisor = request.json['Supervisor']
@@ -16,7 +17,7 @@ def add_Directory():
     Location = request.json['Location']
     Description = request.json['Description']
 
-    new_Directory = Directory(Area,Department,Supervisor,PhoneNumber,Location,Description)
+    new_Directory = Directory(Area, Department, Supervisor, PhoneNumber, Location, Description)
 
     db.session.add(new_Directory)
     db.session.commit()
@@ -24,7 +25,7 @@ def add_Directory():
     return Directory_Schema.jsonify(new_Directory)
 
 #Endpoint to show all Directorys
-@app.route("/Directory", methods=["GET"] )
+@app.route("/Directory", methods=["GET"])
 def get_Directory():
     all_Directorys = Directory.query.all()
     result = Directories_Schema.dump(all_Directorys)
@@ -33,7 +34,7 @@ def get_Directory():
 #Endpoint to show detail of a Directory by Area
 @app.route("/Directory/<Area>", methods=["GET"])
 def Directory_detail_Area(Area):
-    Directory_details = Directory.query.filter(or_(Directory.Department == Area,Directory.Area == Area))
+    Directory_details = Directory.query.filter(or_(Directory.Department == Area, Directory.Area == Area))
     result = Directories_Schema.dump(Directory_details)
 
     return jsonify(result)
