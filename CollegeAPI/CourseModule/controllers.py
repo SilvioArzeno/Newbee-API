@@ -1,5 +1,5 @@
 from CollegeAPI import db
-from models import Course,CourseSchema
+from .models import Course,CourseSchema
 from flask import jsonify,request,Blueprint
 
 Course_Schema = CourseSchema()

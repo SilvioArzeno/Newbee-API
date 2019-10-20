@@ -1,8 +1,8 @@
 from CollegeAPI import db
-from models import Student,UserSchema
+from .models import Student,UserSchema
 from flask import request,Blueprint
 
-app = Blueprint('CourseModule',__name__)
+app = Blueprint('StudentModule',__name__)
 User_Schema =UserSchema()
 Users_Schema = UserSchema(many=True)
 

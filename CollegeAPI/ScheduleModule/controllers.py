@@ -1,7 +1,7 @@
 from CollegeAPI import db
-from models import Schedule
-from CourseModule.controllers import Course_detail
-from CourseModule.models import CourseSchema
+from .models import Schedule
+from ..CourseModule.controllers import Course_detail
+from ..CourseModule.models import CourseSchema
 from flask import jsonify, request, Blueprint
 from sqlalchemy import and_
 

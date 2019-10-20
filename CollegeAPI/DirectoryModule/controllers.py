@@ -1,5 +1,5 @@
 from CollegeAPI import db
-from models import Directory, DirectorySchema
+from .models import Directory, DirectorySchema
 from flask import jsonify, request, Blueprint
 from sqlalchemy import or_
 

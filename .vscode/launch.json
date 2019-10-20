@@ -11,7 +11,7 @@
             "request": "launch",
             "module": "flask",
             "env": {
-                "FLASK_APP": "run.py",
+                "FLASK_APP": "CollegeAPI",
                 "FLASK_ENV": "development",
                 "FLASK_DEBUG": "0"
             },
