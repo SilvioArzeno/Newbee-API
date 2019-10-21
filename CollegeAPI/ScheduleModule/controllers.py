@@ -10,7 +10,7 @@ Courses_Schema = CourseSchema(many=True)
 app = Blueprint('ScheduleModule', __name__)
 
 
-@app.route("/Schedule", methods=["POST"])
+@app.route("/schedule", methods=["POST"])
 def add_Schedule():
     StudentID = request.json['StudentID']
     CourseID = request.json['CourseID']
@@ -23,7 +23,7 @@ def add_Schedule():
     return jsonify(True)
 
 #Endpoint to show specific Schedules
-@app.route("/Schedule/<StudentID>", methods=["GET"])
+@app.route("/schedule/<StudentID>", methods=["GET"])
 def get_Schedule(StudentID):
     all_Schedules = Schedule.query.filter(Schedule.StudentID == StudentID)
     resultSchedules = Courses_Schema.dump(all_Schedules)
@@ -34,7 +34,7 @@ def get_Schedule(StudentID):
     result = Courses_Schema.dump(All_Courses)
     return jsonify(result)
 
-@app.route("/Schedule/<StudentID>/<CourseID>", methods=["DELETE"])
+@app.route("/schedule/<StudentID>/<CourseID>", methods=["DELETE"])
 def Schedule_delete(StudentID, CourseID):
     Schedules = Schedule.query.filter(and_(Schedule.CourseID == CourseID, Schedule.StudentID == StudentID)).first()
     db.session.delete(Schedules)

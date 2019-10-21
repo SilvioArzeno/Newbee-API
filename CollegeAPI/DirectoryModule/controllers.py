@@ -7,7 +7,7 @@ app = Blueprint('DirectoryModule',__name__)
 Directory_Schema = DirectorySchema()
 Directories_Schema = DirectorySchema(many=True)
 #endpoint for new Directory
-@app.route("/Directory", methods=["POST"])
+@app.route("/directory", methods=["POST"])
 def add_Directory():
    
     Area = request.json['Area']
@@ -25,14 +25,14 @@ def add_Directory():
     return Directory_Schema.jsonify(new_Directory)
 
 #Endpoint to show all Directorys
-@app.route("/Directory", methods=["GET"])
+@app.route("/directory", methods=["GET"])
 def get_Directory():
     all_Directorys = Directory.query.all()
     result = Directories_Schema.dump(all_Directorys)
     return jsonify(result)
 
 #Endpoint to show detail of a Directory by Area
-@app.route("/Directory/<Area>", methods=["GET"])
+@app.route("/directory/<Area>", methods=["GET"])
 def Directory_detail_Area(Area):
     Directory_details = Directory.query.filter(or_(Directory.Department == Area, Directory.Area == Area))
     result = Directories_Schema.dump(Directory_details)
@@ -40,7 +40,7 @@ def Directory_detail_Area(Area):
     return jsonify(result)
 
 # endpoint to update Directory
-@app.route("/Directory/<Department>", methods=["PUT"])
+@app.route("/directory/<Department>", methods=["PUT"])
 def Directory_update(Department):
     Directory = Directory.query.filter_by(Directory.Department == Department).first()
     Area = request.json['Area']
@@ -61,7 +61,7 @@ def Directory_update(Department):
     return Directory_Schema.jsonify(Directory)
 
 # endpoint to delete Directory
-@app.route("/Directory/<Department>", methods=["DELETE"])
+@app.route("/directory/<Department>", methods=["DELETE"])
 def Directory_delete(Department):
     Directory = Directory.query.filter(Directory.Department == Department).first()
     db.session.delete(Directory)

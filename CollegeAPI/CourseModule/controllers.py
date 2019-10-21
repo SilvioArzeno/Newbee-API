@@ -10,7 +10,7 @@ def CourseGet(CourseID):
     CurrentCourse = Course.query.filter(Course.CourseID == CourseID).first()
     return CurrentCourse
 #endpoint for new Course
-@app.route("/Course", methods = ["POST"])
+@app.route("/course", methods = ["POST"])
 def add_Course():
     CourseName = request.json['CourseName']
     CourseID = request.json['CourseID']
@@ -28,21 +28,21 @@ def add_Course():
     return Course_Schema.jsonify(new_Course)
 
 #Endpoint to show all Courses
-@app.route("/Course", methods=["GET"] )
+@app.route("/course", methods=["GET"] )
 def get_Course():
     all_Courses = Course.query.all()
     result = Courses_Schema.dump(all_Courses)
     return jsonify(result)
 
 #Endpoint to show detail of a Course by CourseID
-@app.route("/Course/<CourseID>", methods=["GET"])
+@app.route("/course/<CourseID>", methods=["GET"])
 def Course_detail(CourseID):
     CurrentCourse = Course.query.filter(Course.CourseID == CourseID).first()
     return Course_Schema.jsonify(CurrentCourse)
 
 
 # endpoint to update Course
-@app.route("/Course/<CourseID>", methods=["PUT"])
+@app.route("/course/<CourseID>", methods=["PUT"])
 def Course_update(CourseID):
     CurrentCourse = Course.query.filter(Course.CourseID == CourseID).first()
     CourseName = request.json['CourseName']
@@ -65,7 +65,7 @@ def Course_update(CourseID):
     return Course_Schema.jsonify(CurrentCourse)
 
 # endpoint to delete user
-@app.route("/Course/<CourseID>", methods=["DELETE"])
+@app.route("/course/<CourseID>", methods=["DELETE"])
 def Course_delete(CourseID):
     CurrentCourse = Course.query.filter(Course.CourseID == CourseID).first()
     db.session.delete(CurrentCourse)
