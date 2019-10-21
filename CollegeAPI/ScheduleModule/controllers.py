@@ -1,6 +1,6 @@
 from CollegeAPI import db
 from .models import Schedule,ScheduleSchema
-from ..CourseModule.controllers import Course_detail
+from ..CourseModule.controllers import CourseGet
 from ..CourseModule.models import CourseSchema
 from flask import jsonify, request, Blueprint
 from sqlalchemy import and_
@@ -28,8 +28,8 @@ def get_Schedule(StudentID):
     all_Schedules = Schedule.query.filter(Schedule.StudentID == StudentID)
     resultSchedules = Schedules_Schema.dump(all_Schedules)
     All_Courses = []
-    for Schedule in resultSchedules:
-        All_Courses.append(Course_detail(Schedule['CourseID']))
+    for Course in resultSchedules:
+        All_Courses.append(CourseGet(Course['CourseID']))
 
     result = Courses_Schema.dump(All_Courses)
     return jsonify(result)
