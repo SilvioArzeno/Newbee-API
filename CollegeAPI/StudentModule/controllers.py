@@ -1,6 +1,6 @@
 from CollegeAPI import db
 from .models import Student,UserSchema
-from flask import request,Blueprint
+from flask import request,jsonify,Blueprint
 
 app = Blueprint('StudentModule',__name__)
 User_Schema =UserSchema()
