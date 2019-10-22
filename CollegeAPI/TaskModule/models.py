@@ -9,9 +9,8 @@ class Task(db.Model):
     TaskDueDate = db.Column(db.DateTime)
     TaskDone = db.Column(db.Boolean, default = False)
 
-    def __init__(self,StudentID,TaskID,TaskName,TaskDescription,TaskDueDate,TaskDone):
+    def __init__(self,StudentID,TaskName,TaskDescription,TaskDueDate,TaskDone):
         self.StudentID = StudentID
-        self.TaskID = TaskID
         self.TaskName = TaskName
         self.TaskDescription = TaskDescription
         self.TaskDueDate = TaskDueDate

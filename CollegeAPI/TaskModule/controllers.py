@@ -30,4 +30,14 @@ def get_tasks(StudentID):
     resultTasks = Tasks_Schema.dump(all_tasks)
     return jsonify(resultTasks)
 
-@app.route("/tasks/<StudentID>/<TaskID>", methods = ["GET"])
+@app.route("/tasks/<TaskID>", methods = ["PUT"])
+def edit_task(TaskID):
+    CurrentTask = Task.query.filter(Task.TaskID == TaskID)
+    CurrentTask.TaskName = request.json['TaskName']
+    CurrentTask.TaskDescription = request.json['TaskDescription']
+    CurrentTask.TaskDueDate = datetime.strptime(request.json['TaskDueDate'],"%Y/%m/%d-%I:%M %p")
+    CurrentTask.TaskDone = request.json['TaskDone']
+
+    db.session.commit()
+
+    return jsonify(True)

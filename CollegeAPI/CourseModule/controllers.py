@@ -40,30 +40,6 @@ def Course_detail(CourseID):
     CurrentCourse = Course.query.filter(Course.CourseID == CourseID).first()
     return Course_Schema.jsonify(CurrentCourse)
 
-
-# endpoint to update Course
-@app.route("/course/<CourseID>", methods=["PUT"])
-def Course_update(CourseID):
-    CurrentCourse = Course.query.filter(Course.CourseID == CourseID).first()
-    CourseName = request.json['CourseName']
-    CourseID = request.json['CourseID']
-    CourseSection = request.json['CourseSection']
-    CourseRoom = request.json['CourseRoom']
-    ScheduleDays = request.json['ScheduleDays']
-    ScheduleHours = request.json['ScheduleHours']
-    CourseTeacher = request.json['CourseTeacher']
-
-    CurrentCourse.CourseName = CourseName
-    CurrentCourse.CourseID = CourseID
-    CurrentCourse.CourseSection = CourseSection
-    CurrentCourse.CourseRoom = CourseRoom
-    CurrentCourse.ScheduleDays = ScheduleDays
-    CurrentCourse.ScheduleHours = ScheduleHours
-    CurrentCourse.CourseTeacher = CourseTeacher
-
-    db.session.commit()
-    return Course_Schema.jsonify(CurrentCourse)
-
 # endpoint to delete user
 @app.route("/course/<CourseID>", methods=["DELETE"])
 def Course_delete(CourseID):
