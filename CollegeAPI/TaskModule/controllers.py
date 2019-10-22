@@ -24,4 +24,10 @@ def add_task():
     return Task_Schema.jsonify(new_task)
 
 
-#@app.route("/tasks/<StudentID>", methods = ["GET"])
+@app.route("/tasks/<StudentID>", methods = ["GET"])
+def get_tasks(StudentID):
+    all_tasks = Task.query.filter(Task.StudentID == StudentID)
+    resultTasks = Tasks_Schema.dump(all_tasks)
+    return jsonify(resultTasks)
+
+@app.route("/tasks/<StudentID>/<TaskID>", methods = ["GET"])

@@ -3,7 +3,7 @@ from CollegeAPI import ma,db
 class Task(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     StudentID = db.Column(db.ForeignKey("student.StudentID"))
-    TaskID = db.Column(db.String(20),unique = True)
+    TaskID = db.column_property(id)
     TaskName = db.Column(db.String(50))
     TaskDescription = db.Column(db.String(100))
     TaskDueDate = db.Column(db.DateTime)
