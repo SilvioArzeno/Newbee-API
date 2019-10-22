@@ -9,15 +9,19 @@ Tasks_Schema = TaskSchema(many = True)
 
 @app.route("/tasks", methods = ["POST"])
 def add_task():
+    StudentID = request.json['StudentID']
     TaskID = request.json['TaskID']
     TaskName = request.json['TaskName']
     TaskDescription = request.json['TaskDescription']
     TaskDueDate = datetime.strptime(request.json['TaskDueDate'],"%Y/%m/%d-%I:%M %p")
     TaskDone = request.json['TaskDone']
 
-    new_task = Task(TaskID,TaskName,TaskDescription,TaskDueDate,TaskDone)
+    new_task = Task(StudentID,TaskID,TaskName,TaskDescription,TaskDueDate,TaskDone)
 
     db.session.add(new_task)
     db.session.commit()
 
     return Task_Schema.jsonify(new_task)
+
+
+#@app.route("/tasks/<StudentID>", methods = ["GET"])
