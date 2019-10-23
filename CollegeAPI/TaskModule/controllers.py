@@ -1,4 +1,5 @@
 from CollegeAPI import db
+from sqlalchemy import and_
 from .models import Task,TaskSchema
 from flask import request,jsonify,Blueprint
 from datetime import datetime
@@ -10,18 +11,25 @@ Tasks_Schema = TaskSchema(many = True)
 @app.route("/tasks", methods = ["POST"])
 def add_task():
     StudentID = request.json['StudentID']
-    TaskID = request.json['TaskID']
     TaskName = request.json['TaskName']
     TaskDescription = request.json['TaskDescription']
     TaskDueDate = datetime.strptime(request.json['TaskDueDate'],"%Y/%m/%d-%I:%M %p")
     TaskDone = request.json['TaskDone']
 
-    new_task = Task(StudentID,TaskID,TaskName,TaskDescription,TaskDueDate,TaskDone)
+    new_task = Task(StudentID,TaskName,TaskDescription,TaskDueDate,TaskDone)
 
     db.session.add(new_task)
     db.session.commit()
 
-    return Task_Schema.jsonify(new_task)
+    result = Task.query.filter_by(StudentID = StudentID,
+    TaskName = TaskName,
+    TaskDueDate = TaskDueDate,
+    TaskDescription = TaskDescription, 
+    TaskDone = TaskDone).first()
+
+    InsertedTask = Task_Schema.dump(result)
+
+    return Task_Schema.jsonify(InsertedTask)
 
 
 @app.route("/tasks/<StudentID>", methods = ["GET"])
@@ -41,3 +49,4 @@ def edit_task(TaskID):
     db.session.commit()
 
     return jsonify(True)
+
