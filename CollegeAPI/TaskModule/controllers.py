@@ -1,5 +1,4 @@
 from CollegeAPI import db
-from sqlalchemy import and_
 from .models import Task,TaskSchema
 from flask import request,jsonify,Blueprint
 from datetime import datetime
