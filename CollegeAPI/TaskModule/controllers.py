@@ -51,8 +51,8 @@ def edit_task(TaskID):
 
 @app.route("/tasks/<TaskID>", methods = ["DELETE"])
 def delete_task(TaskID):
-    current_task = Task.query,filter(Task.TaskID == TaskID).first()
+    current_task = Task.query.filter(Task.TaskID == TaskID).first()
     db.session.delete(current_task)
     db.session.commit()
-
-    return jsonify(current_task)
+    result  = Task_Schema.dump(current_task)
+    return jsonify(result)
