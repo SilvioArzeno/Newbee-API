@@ -39,7 +39,7 @@ def get_tasks(StudentID):
 
 @app.route("/tasks/<TaskID>", methods = ["PUT"])
 def edit_task(TaskID):
-    CurrentTask = Task.query.filter(Task.TaskID == TaskID)
+    CurrentTask = Task.query.filter(Task.TaskID == TaskID).first()
     CurrentTask.TaskName = request.json['TaskName']
     CurrentTask.TaskDescription = request.json['TaskDescription']
     CurrentTask.TaskDueDate = datetime.strptime(request.json['TaskDueDate'],"%Y/%m/%d-%I:%M %p")
