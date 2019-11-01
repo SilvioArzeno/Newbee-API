@@ -47,7 +47,7 @@ def edit_task(TaskID):
 
     db.session.commit()
 
-    return jsonify(True)
+    return jsonify(CurrentTask)
 
 @app.route("/tasks/<TaskID>", methods = ["DELETE"])
 def delete_task(TaskID):
