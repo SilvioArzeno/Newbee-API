@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
@@ -19,3 +19,7 @@ app.register_blueprint(CourseModule)
 app.register_blueprint(DirectoryModule)
 app.register_blueprint(ScheduleModule)
 app.register_blueprint(TaskModule)
+
+@app.errorhandler(404)
+def not_found():
+    return render_template('404.html'),404
