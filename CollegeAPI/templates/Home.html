@@ -1,0 +1,50 @@
+<h1 id="newbee-api">Newbee-API</h1>
+<p>https://api-newbee.herokuapp.com/ #### API implementation using Flask and SQLite with 3 main endpoints for student and subject managements as well as a directory for college departments</p>
+<table>
+<col width="4%" />
+<thead>
+<tr class="header">
+<th align="left"># Student endpoint ttps://api-newbee.herokuapp.com/student ##### GET method On a GET method this endpoint returns a JSON with all the registered students ##### POST method n a POST method the API will insert a student object to the database following the models describe at the end of this file https://api-newbee.herokuapp.com/student/matricula ##### GET method On a GET method this endpoint will return a JSON with all the details of the student object that has the specified &quot;matricula&quot; number. ##### PUT method On a PUT method the endpoint will update the specified student that matches the given &quot;matricula&quot;. ##### DELETE method On a DELETE method this endpoint will delete from the database the student with the specified &quot;matricula&quot; and return the information from the deleted object.</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"># Materia endpoint https://api-newbee.herokuapp.com/materia</td>
+</tr>
+<tr class="even">
+<td align="left">##### GET method On a GET method this endpoint returns a JSON with all the registered materias following the models describe at the end of this file ##### POST method n a POST method the API will insert a materia object to the database following the models describe at the end of this file</td>
+</tr>
+<tr class="odd">
+<td align="left">ttps://api-newbee.herokuapp.com/materia/codigo ##### GET method On a GET method this endpoint will return a JSON with all the details of the materia object that has the specified &quot;codigo&quot;. ##### PUT method On a PUT method the endpoint will update the specified materia that matches the given &quot;codigo&quot;. ##### DELETE method On a DELETE method this endpoint will delete from the database the materia with the specified &quot;codigo&quot; and return the information from the deleted object.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="directorio-endpoint">Directorio endpoint</h2>
+<p>https://api-newbee.herokuapp.com/directorio</p>
+<p>##### GET method On a GET method this endpoint returns a JSON with all the registered directorios following the models describe at the end of this file ##### POST method On a POST method the API will insert a directorio object to the database following the models describe at the end of this file</p>
+<p>https://api-newbee.herokuapp.com/directorio/area ##### GET method On a GET method this endpoint will return a JSON with all the directorios that have the specified &quot;area&quot;.</p>
+<p>https://api-newbee.herokuapp.com/directorio/departamento https://api-newbee.herokuapp.com/materia/codigo ##### GET method On a GET method this endpoint will return a JSON with all the details of the directorio with the specified &quot;departamento&quot; ##### PUT method On a PUT method the endpoint will update the specified directorio that matches the given &quot;departamento&quot;. ##### DELETE method On a DELETE method this endpoint will delete from the database the directorio with the specified &quot;departamento&quot; and return the information from the deleted object.</p>
+<hr />
+<h1 id="models">Models</h1>
+<h3 id="student-model">Student model</h3>
+<p>string <strong>matricula</strong> MaxLength(7)</p>
+<p>string <strong>nombres</strong> MaxLength(30)</p>
+<p>string <strong>apellidos</strong> MaxLength(30)</p>
+<p>string <strong>password</strong> MaxLength(50)</p>
+<p>string <strong>email</strong> MaxLength(50)</p>
+<p>bool <strong>active</strong> --&gt; True if student is active, otherwise false</p>
+<h3 id="materia-model">Materia model</h3>
+<p>string <strong>nombre</strong> MaxLength(50)</p>
+<p>string <strong>codigo</strong> MaxLength(6)</p>
+<p>int <strong>seccion</strong></p>
+<p>string <strong>aula</strong> MaxLength(10)</p>
+<p>string <strong>horarioDias</strong> MaxLength(30)</p>
+<p>string <strong>horarioHoras</strong> MaxLength(30)</p>
+<p>string <strong>profesor</strong> MaxLength(50)</p>
+<h3 id="directorio-model">Directorio model</h3>
+<p>string <strong>area</strong> MaxLength(50)</p>
+<p>string <strong>departamento</strong> MaxLength(50)</p>
+<p>string <strong>encargado</strong> MaxLength(50)</p>
+<p>string <strong>telefono</strong> MaxLength(10)</p>
+<p>string <strong>edificio</strong> MaxLength(50)</p>
+<p>string <strong>descripcion</strong> MaxLength(100)</p>

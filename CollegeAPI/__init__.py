@@ -20,6 +20,10 @@ app.register_blueprint(DirectoryModule)
 app.register_blueprint(ScheduleModule)
 app.register_blueprint(TaskModule)
 
+@app.route("/")
+def Home_page():
+    return render_template('Home.html')
+
 @app.errorhandler(404)
 def not_found(error):
     return render_template('404.html'),404
