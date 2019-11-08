@@ -2,5 +2,9 @@
     "python.linting.pylintEnabled": true,
     "python.linting.flake8Enabled": false,
     "python.linting.enabled": true,
-    "python.linting.pylintArgs": ["--load-plugins", "pylint-flask"]
+    "python.linting.pylintArgs": [
+        "--load-plugins",
+        "pylint-flask"
+    ],
+    "python.pythonPath": "venv\\Scripts\\python.exe"
 }
