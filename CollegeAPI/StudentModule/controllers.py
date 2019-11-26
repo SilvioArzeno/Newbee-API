@@ -11,7 +11,7 @@ def add_student():
     StudentID = request.json['StudentID']
     FirstName = request.json['FirstName']
     LastName = request.json['LastName']
-    Password = request.json['Password']
+    Password = PassWordHashing(request.json['Password'])
     Email = request.json['Email']
     Active = request.json['Active']
 
@@ -66,3 +66,10 @@ def user_delete(StudentID):
     db.session.commit()
 
     return User_Schema.jsonify(student)
+
+
+def PassWordHashing(OldPassword):
+    return  (31 + OldPassword)
+
+def PassWordUnHashing(HashedPassword):
+    return
