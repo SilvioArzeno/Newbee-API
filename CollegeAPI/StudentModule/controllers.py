@@ -69,7 +69,18 @@ def user_delete(StudentID):
 
 
 def PassWordHashing(OldPassword):
-    return  (31 + OldPassword)
+    NewPassword = ''
+    for x in OldPassword:
+        NewPassword += chr(ord(x) * 31 % 255) 
+    return NewPassword
 
-def PassWordUnHashing(HashedPassword):
-    return
+#Endpoint to verify a password
+@app.route("/student/<StudentID>/<Password>", methods = ["POST"])
+def VerifyPassWord(StudentID,Password):
+    CurStudent = Student.query.filter(Student.StudentID == StudentID).first()
+    something = PassWordHashing(Password)
+    if PassWordHashing(Password) == CurStudent.Password:
+        return jsonify(True)
+    
+    return jsonify(False)
+
