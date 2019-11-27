@@ -6,5 +6,5 @@
         "--load-plugins",
         "pylint-flask"
     ],
-    "python.pythonPath": "venv\\Scripts\\python.exe"
+    "python.pythonPath": "C:\\Users\\Silvio Arzeno\\AppData\\Local\\Programs\\Python\\Python37-32\\python.exe"
 }

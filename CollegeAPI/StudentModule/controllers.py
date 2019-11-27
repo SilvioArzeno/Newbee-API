@@ -11,7 +11,7 @@ def add_student():
     StudentID = request.json['StudentID']
     FirstName = request.json['FirstName']
     LastName = request.json['LastName']
-    Password = PassWordHashing(request.json['Password'])
+    Password = PassWordHashing(request.json['Password'],StudentID)
     Email = request.json['Email']
     Active = request.json['Active']
 
@@ -43,7 +43,7 @@ def user_update(StudentID):
     StudentID = request.json['StudentID']
     FirstName = request.json['FirstName']
     LastName = request.json['LastName']
-    Password = request.json['Password']
+    Password = PassWordHashing(request.json['Password'],StudentID)
     Email = request.json['Email']
     Active = request.json['Active']
 
@@ -68,18 +68,19 @@ def user_delete(StudentID):
     return User_Schema.jsonify(student)
 
 
-def PassWordHashing(OldPassword):
+def PassWordHashing(OldPassword,StudentID):
     NewPassword = ''
-    for x in OldPassword:
-        NewPassword += chr(ord(x) * 31 % 255) 
-    return NewPassword
+    for x in StudentID:
+        for y in OldPassword:
+         NewPassword += chr(ord(x) * 257 % 126) + chr(ord(y) * 37 % 126)
+
+    return  NewPassword[:50:]
 
 #Endpoint to verify a password
 @app.route("/student/<StudentID>/<Password>", methods = ["POST"])
 def VerifyPassWord(StudentID,Password):
     CurStudent = Student.query.filter(Student.StudentID == StudentID).first()
-    something = PassWordHashing(Password)
-    if PassWordHashing(Password) == CurStudent.Password:
+    if PassWordHashing(Password,StudentID) == CurStudent.Password:
         return jsonify(True)
     
     return jsonify(False)
