@@ -80,6 +80,8 @@ def PassWordHashing(OldPassword,StudentID):
 @app.route("/student/<StudentID>/<Password>", methods = ["POST"])
 def VerifyPassWord(StudentID,Password):
     CurStudent = Student.query.filter(Student.StudentID == StudentID).first()
+    if CurStudent is None:
+        return jsonify(False)
     if PassWordHashing(Password,StudentID) == CurStudent.Password:
         return jsonify(True)
     
