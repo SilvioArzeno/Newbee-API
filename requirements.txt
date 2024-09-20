@@ -2,7 +2,7 @@ asgiref==3.2.3
 astroid==2.3.1
 Click==7.0
 colorama==0.4.1
-Django==3.0.3
+Django==3.2.25
 django-pyodbc-azure==2.1.0.0
 django-tinymce==3.4.0
 entrypoints==0.3
